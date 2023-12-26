@@ -1,0 +1,8 @@
+MongoDB is NoSQL DB 
+Data is stored inside MongoDB in form of collections 
+and in form of documents inside the collections.
+Documents here are very much similar to JSON.
+Allows nesting for documents inside a documents
+Provide high speed performance
+
+MongoDB Atlas provides online MongoDB

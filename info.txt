@@ -544,5 +544,55 @@ bookstore>
 
 
 
+Querrying nested documents
+bookstore> db.newbooks.find({"reviews.name": "luigi" })
+[
+  {
+    _id: ObjectId('658b0ab3c0577bc2dc8d666a'),
+    author: 'Brandon Sanderson',
+    title: 'The way of Kings',
+    rating: 9,
+    genres: [ 'sci-fi' ],
+    reviews: [
+      { name: 'luigi', body: 'Great book' },
+      { name: 'yoshi', body: 'so so' }
+    ]
+  },
+  {
+    _id: ObjectId('658b0b5dc0577bc2dc8d666b'),
+    author: 'Brandon Sanderson',
+    title: 'The magical island',
+    rating: 8,
+    genres: [ 'fantasy', 'fiction' ],
+    reviews: [
+      { name: 'peach', body: 'Great book' },
+      { name: 'luigi', body: 'so so' }
+    ]
+  }
+]
+bookstore>
+
+
+
+
+DELETE one document
+bookstore> db.newbooks.deleteOne({_id: ObjectId('658b0ab3c0577bc2dc8d666a') })
+{ acknowledged: true, deletedCount: 1 }
+bookstore> db.newbooks.find()
+
+
+
+
+DELETE Many documents
+bookstore> db.newbooks.deleteMany({"author":"Terry Pratchett"})
+{ acknowledged: true, deletedCount: 1 }
+bookstore> db.newbooks.find()
+
+
+bookstore> db.newbooks.deleteMany({"genres": "fantasy"})
+{ acknowledged: true, deletedCount: 2 }
+bookstore> db.newbooks.find()
+bookstore>
+
 
 

@@ -475,3 +475,74 @@ bookstore>
 
 
 
+for more info, https://www.mongodb.com/docs/manual/reference/operator/
+
+
+
+
+
+Querrying arrays
+bookstore> db.newbooks.find({"genres": ["fantasy"]})
+[
+  {
+    _id: ObjectId('658b0ab3c0577bc2dc8d666a'),
+    author: 'Brandon Sanderson',
+    title: 'The way of Kings',
+    rating: 9,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  },
+  {
+    _id: ObjectId('658b0b5dc0577bc2dc8d666b'),
+    author: 'Brandon Sanderson',
+    title: 'The magical island',
+    rating: 8,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  }
+]
+bookstore>
+
+
+bookstore> db.newbooks.find({"genres": ["fantasy", "magical"]})
+[
+  {
+    _id: ObjectId('658b0b96c0577bc2dc8d666d'),
+    author: 'Terry Pratchett',
+    title: 'Dune',
+    rating: 6,
+    genres: [ 'fantasy', 'magical' ],
+    reviews: [
+      { name: 'Yoshi', body: 'nice' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  }
+]
+bookstore>
+
+
+
+ALL operator
+bookstore> db.newbooks.find({"genres": {$all: ["fantasy", "dystopian"]} })
+[
+  {
+    _id: ObjectId('658b0b96c0577bc2dc8d666c'),
+    author: 'Patrick Rothfuss',
+    title: 'The way of Kings',
+    rating: 7,
+    genres: [ 'fantasy', 'dystopian' ],
+    reviews: [ { name: 'Yoshi', body: 'Great book' } ]
+  }
+]
+bookstore>
+
+
+
+
+

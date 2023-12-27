@@ -1,4 +1,8 @@
+
+node_modules/
+
 # /info.txt
 /bookstore.books.json
 /bookstore.newbooks.json
-node_modules/
+
+

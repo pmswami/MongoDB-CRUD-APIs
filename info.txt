@@ -8,3 +8,470 @@ Provide high speed performance
 MongoDB Atlas provides online MongoDB
 MongoDB can have as many collections as it require
 A unique object ID will automatically added to each document.
+
+To get all documents form collection
+bookstore> db.books.find()
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+
+bookstore> db.books.find({"author": "Terry Pratchet"})
+
+
+
+To filter the documents based on values,
+bookstore> db.books.find({"author": "Terry Pratchit"})
+[
+  {
+    _id: ObjectId('658afb87c0577bc2dc8d6666'),
+    title: 'The color of Magic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    title: 'Life Fantastic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    title: 'Dune',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  }
+]
+bookstore> db.books.find({"author": "Terry Pratchit", "rating": 7})
+
+
+
+To select required fields from the documents 
+bookstore> db.books.find({"author": "Terry Pratchit", "rating": 7}, {"title":1})
+[
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    title: 'Life Fantastic'
+  },
+  { _id: ObjectId('658afcb8c0577bc2dc8d6669'), title: 'Dune' }
+]
+bookstore>
+
+
+
+OR 
+bookstore> db.books.find({}, {"author":1})
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    author: 'Patrick Rothfuss'
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+    author: 'Brandon Sanderson'
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7e'),
+    author: 'Brandon Sanderson'
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7f'),
+    author: 'Louis Theroux'
+  },
+  {
+    _id: ObjectId('658afb87c0577bc2dc8d6666'),
+    author: 'Terry Pratchit'
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    author: 'Terry Pratchit'
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    author: 'Terry Pratchit'
+  }
+]
+bookstore>
+
+
+
+
+To get only one document that matches the search criteria
+bookstore> db.books.findOne({_id: ObjectId('658afcb8c0577bc2dc8d6669')})
+{
+  _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+  title: 'Dune',
+  author: 'Terry Pratchit',
+  pages: 550,
+  genres: [ 'fantasy', 'magical' ],
+  rating: 7
+}
+bookstore>
+
+
+
+
+To limit the query output documents 
+bookstore> db.books.find().limit(2)
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+    title: 'The Final Empire',
+    author: 'Brandon Sanderson',
+    pages: 450,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 8
+  }
+]
+bookstore>
+
+
+
+
+To count the number of returned documents 
+bookstore> db.books.find().count()
+7
+bookstore> db.books.find({"author":"Brandon Sanderson"}).count()
+2
+
+
+
+
+
+Sorting the documents
+bookstore> db.books.find().sort({"author":1})
+[
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+    title: 'The Final Empire',
+    author: 'Brandon Sanderson',
+    pages: 450,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 8
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7e'),
+    title: 'The Way of Kings',
+    author: 'Brandon Sanderson',
+    pages: 350,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7f'),
+    title: 'The Call of the Weird',
+    author: 'Louis Theroux',
+    pages: 350,
+    genres: [ 'non-fiction', 'strange', 'comedy' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658afb87c0577bc2dc8d6666'),
+    title: 'The color of Magic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 8
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    title: 'Life Fantastic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    title: 'Dune',
+    author: 'Terry Pratchit',
+    pages: 550,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  }
+]
+bookstore>
+
+
+
+Inserting one document
+bookstore> db.newbooks.insertOne({"author":"Brandon Sanderson", "title": "The way of Kings", "rating":9, "genres":["fantasy"],"reviews":[{"name":"Yoshi", "body": "Great book"},{"name":"Mario", "body":"so so"}]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('658b0ab3c0577bc2dc8d666a')
+}
+bookstore> 
+
+
+
+
+Inserting many documents
+bookstore> db.newbooks.insertMany([{"author":"Brandon Sanderson", "title": "The way of Kings", "rating":9, "genres":["fantasy"],"reviews":[{"name":"Yoshi", "body": "Great book"},{"name":"Mario", "body":"so so"}]},{"author":"Terry Pratchett", "title": "Dune", "rating":7, "genres":["fantasy"],"reviews":[{"name":"Yoshi", "body": "Great book"},{"name":"Mario", "body":"so so"}]}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('658b0b96c0577bc2dc8d666c'),
+    '1': ObjectId('658b0b96c0577bc2dc8d666d')
+  }
+}
+bookstore>
+
+
+
+
+filtering using operators
+bookstore> db.newbooks.find({"rating":{$gt:7}})
+[
+  {
+    _id: ObjectId('658b0ab3c0577bc2dc8d666a'),
+    author: 'Brandon Sanderson',
+    title: 'The way of Kings',
+    rating: 9,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  },
+  {
+    _id: ObjectId('658b0b5dc0577bc2dc8d666b'),
+    author: 'Brandon Sanderson',
+    title: 'The way of Kings',
+    rating: 9,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  },
+  {
+    _id: ObjectId('658b0b96c0577bc2dc8d666c'),
+    author: 'Brandon Sanderson',
+    title: 'The way of Kings',
+    rating: 9,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  }
+]
+bookstore>
+
+bookstore> db.newbooks.find({"rating":{$lt:8}})
+[
+  {
+    _id: ObjectId('658b0b96c0577bc2dc8d666d'),
+    author: 'Terry Pratchett',
+    title: 'Dune',
+    rating: 7,
+    genres: [ 'fantasy' ],
+    reviews: [
+      { name: 'Yoshi', body: 'Great book' },
+      { name: 'Mario', body: 'so so' }
+    ]
+  }
+]
+bookstore>
+
+
+
+bookstore> db.books.find({"rating":{$gte:7}, "author":"Patrick Rothfuss"})
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  }
+]
+bookstore>
+
+
+
+OR operator 
+bookstore> db.books.find({$or: [{"rating":7},{"rating":9}]})
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7e'),
+    title: 'The Way of Kings',
+    author: 'Brandon Sanderson',
+    pages: 350,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7f'),
+    title: 'The Call of the Weird',
+    author: 'Louis Theroux',
+    pages: 350,
+    genres: [ 'non-fiction', 'strange', 'comedy' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    title: 'Life Fantastic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    title: 'Dune',
+    author: 'Terry Pratchit',
+    pages: 550,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  }
+]
+bookstore>
+
+
+
+
+bookstore> db.books.find({$or: [{pages: {$lt:300}},{pages: {$gt:400}}]})
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+    title: 'The Final Empire',
+    author: 'Brandon Sanderson',
+    pages: 450,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 8
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    title: 'Dune',
+    author: 'Terry Pratchit',
+    pages: 550,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  }
+]
+bookstore>
+
+
+
+
+IN operator
+bookstore> db.books.find({"rating": {$in: [7,8]}})
+[
+  {
+    _id: ObjectId('658af7b7708975ba33547e7d'),
+    title: 'The Final Empire',
+    author: 'Brandon Sanderson',
+    pages: 450,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 8
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7f'),
+    title: 'The Call of the Weird',
+    author: 'Louis Theroux',
+    pages: 350,
+    genres: [ 'non-fiction', 'strange', 'comedy' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afb87c0577bc2dc8d6666'),
+    title: 'The color of Magic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 8
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6668'),
+    title: 'Life Fantastic',
+    author: 'Terry Pratchit',
+    pages: 300,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  },
+  {
+    _id: ObjectId('658afcb8c0577bc2dc8d6669'),
+    title: 'Dune',
+    author: 'Terry Pratchit',
+    pages: 550,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 7
+  }
+]
+bookstore>
+
+
+
+
+NIN operator
+bookstore> db.books.find({"rating": {$nin: [7,8]}})
+[
+  {
+    _id: ObjectId('658af6bb708975ba33547e7b'),
+    title: 'Name of the Wind',
+    author: 'Patrick Rothfuss',
+    pages: 500,
+    genres: [ 'fantasy', 'magical' ],
+    rating: 9
+  },
+  {
+    _id: ObjectId('658af7b7708975ba33547e7e'),
+    title: 'The Way of Kings',
+    author: 'Brandon Sanderson',
+    pages: 350,
+    genres: [ 'fantasy', 'dystopian' ],
+    rating: 9
+  }
+]
+bookstore>
+
+
+
+

@@ -17,6 +17,18 @@ connectToDb((err)=>{
 
 //routes
 app.get("/books", (req, res)=>{
-    res.json({msg:"Welcome to the API"})
+    let books=[]
+    db.collection("newbooks")
+    .find() // returns cursor to the data from collection
+    .sort({"author":1})
+    .forEach(element => {
+        books.push(element)
+    })
+    .then(()=>{
+        res.status(200).json(books)
+    })
+    .catch(()=>{
+        res.status(500).json({error: "Could not fetch the documents"})
+    })
 })
 

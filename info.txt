@@ -596,3 +596,97 @@ bookstore>
 
 
 
+UPDATE one document
+bookstore> db.newbooks.updateOne({_id: ObjectId('658b0b96c0577bc2dc8d666c')}, {$set: {title: "The Way of Kings"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+bookstore> db.newbooks.updateOne({_id: ObjectId('658b0b96c0577bc2dc8d666c')}, {$set: {title: "The Way of Kings", rating: 9 }})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+
+
+UPDATE Many documents
+bookstore> db.newbooks.updateMany({author: "Brandon Sanderson"},{$set: {author:"Brandon Sandersen"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+INC operator
+bookstore>  db.newbooks.updateOne({_id: ObjectId('658b0b96c0577bc2dc8d666d')}, {$inc: {pages:10}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+
+PULL operator
+bookstore> db.newbooks.updateOne({_id:  ObjectId('658bd2e38b44c8daeac7e7f3')},{$pull: {"genres": "fantasy"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+PUSH operator
+bookstore> db.newbooks.updateOne({_id:  ObjectId('658bd2e38b44c8daeac7e7f3')},{$push: {"genres": "fantasy"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+
+EACH operator
+bookstore> db.newbooks.updateOne({_id:  ObjectId('658bd2e38b44c8daeac7e7f3')},{$push: {"genres": {$each: ["1", "2"]}}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bookstore> db.newbooks.find()
+
+
+
+

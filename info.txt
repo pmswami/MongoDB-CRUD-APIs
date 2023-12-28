@@ -690,3 +690,32 @@ bookstore> db.newbooks.find()
 
 
 
+INDEX creation 
+bookstore> db.newbooks.createIndex({"rating": 8})
+rating_8
+bookstore> db.newbooks.get
+
+
+
+INDEX listing
+bookstore> db.newbooks.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { rating: 8 }, name: 'rating_8' }
+]
+bookstore> db.newbooks.find().explain("executionStats")
+
+
+INDEX Deletion
+bookstore> db.newbooks.dropIndex({"rating": 8})
+{ nIndexesWas: 2, ok: 1 }
+bookstore> db.newbooks.getIndexes()
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+bookstore>
+
+
+examine executionStats
+bookstore> db.newbooks.find({"rating": 8}).explain("executionStats")
+
+
+

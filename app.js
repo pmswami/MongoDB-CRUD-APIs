@@ -72,3 +72,23 @@ app.post("/books", (req, res)=>{
         res.status(500).json({error: "Could not create a new document"})
     })
 })
+
+
+//delete request handler
+app.delete("/books/:id",(req, res)=>{
+    if(ObjectId.isValid(req.params.id)){
+        db.collection("newbooks")
+        .deleteOne({_id: new ObjectId(req.params.id)})
+        .then((result)=>{
+            if(result) res.status(200).json(result)
+            else res.status(200).json({error: "Object does not exist"})
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(500).json({error: "could not delete document"})
+        })
+    }
+    else{
+        res.status(500).json({error: "not a valid doc Id"})
+    }
+})

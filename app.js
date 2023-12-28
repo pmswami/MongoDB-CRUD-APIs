@@ -20,10 +20,16 @@ connectToDb((err)=>{
 //routes
 //fetch all documents
 app.get("/books", (req, res)=>{
+    //pagination
+    const page = req.query.page || 0
+    const booksPerPage = 2
+
     let books=[]
     db.collection("newbooks")
     .find() // returns cursor to the data from collection
-    .sort({"author":1})
+    .sort({"author": 1 })
+    .skip(page*booksPerPage)
+    .limit(booksPerPage)
     .forEach(element => {
         books.push(element)
     })
@@ -96,7 +102,7 @@ app.delete("/books/:id",(req, res)=>{
 
 //patch request handler
 app.patch("/books/:id", (req, res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     const updates = req.body
     if(ObjectId.isValid(req.params.id)){
         db.collection("newbooks")

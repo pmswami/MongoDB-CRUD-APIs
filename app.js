@@ -1,5 +1,6 @@
 const express = require("express")
 const {connectToDb, getDb} = require("./db")
+const { ObjectId } = require("mongodb")
 
 // init the app and middleware
 const app = express()
@@ -32,3 +33,25 @@ app.get("/books", (req, res)=>{
     })
 })
 
+
+app.get("/books/:id", (req, res)=>{
+
+    // console.log(req.params.id)
+
+    if(ObjectId.isValid(req.params.id)){
+        db.collection("newbooks")
+        .findOne({_id: new ObjectId(req.params.id)})
+        .then((doc)=>{
+            if(doc) res.status(200).json(doc)
+            else res.status(200).json({error: "Object does not exist"})
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(500).json({error: "could not fetch results"})
+        })
+    }
+    else{
+        res.status(500).json({error: "not a valid doc Id"})
+    }
+    
+})

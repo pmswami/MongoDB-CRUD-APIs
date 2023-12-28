@@ -4,6 +4,7 @@ const { ObjectId } = require("mongodb")
 
 // init the app and middleware
 const app = express()
+app.use(express.json())
 
 //DB Connection
 let db
@@ -17,6 +18,7 @@ connectToDb((err)=>{
 })
 
 //routes
+//fetch all documents
 app.get("/books", (req, res)=>{
     let books=[]
     db.collection("newbooks")
@@ -33,7 +35,7 @@ app.get("/books", (req, res)=>{
     })
 })
 
-
+//fetch single document
 app.get("/books/:id", (req, res)=>{
 
     // console.log(req.params.id)
@@ -54,4 +56,19 @@ app.get("/books/:id", (req, res)=>{
         res.status(500).json({error: "not a valid doc Id"})
     }
     
+})
+
+
+//post request handler
+app.post("/books", (req, res)=>{
+    // console.log(req.params.body)
+    const book = req.body
+    db.collection("newbooks")
+    .insertOne(book)
+    .then((result)=>{
+        res.status(200).json(result)
+    })
+    .catch((err)=>{
+        res.status(500).json({error: "Could not create a new document"})
+    })
 })
